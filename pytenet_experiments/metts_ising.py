@@ -1,6 +1,7 @@
-"""https://github.com/cmendl/pytenet/blob/master/experiments/metts_ising.py"""
-
 """
+Modified from
+https://github.com/cmendl/pytenet/blob/master/experiments/metts_ising.py
+
 Numerically investigate METTS sampling for computing dynamical
 correlation functions at finite temperature.
 
@@ -9,6 +10,8 @@ Reference:
     Minimally entangled typical thermal state algorithms
     New J. Phys. 12, 055026 (2010) (arXiv:1002.1305)
 """
+
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -62,7 +65,7 @@ def site_operator(L: int, i: int, op: np.ndarray):
     return np.kron(np.identity(2**i), np.kron(op, np.identity(2 ** (L - i - 1))))
 
 
-def main():
+def main(image_folderpath: Path = Path(".")):
     # number of lattice sites
     L = 7
 
@@ -135,14 +138,16 @@ def main():
     plt.ylabel(r"$\langle B(t) A(0) \rangle_{\beta}$")
     plt.legend(("real", "imag"))
     plt.title("exact response function")
-    plt.show()
+    plt.savefig(image_folderpath.joinpath("metts_ising_1.png"), dpi=300)
+    plt.clf()
 
     # visualize METTS error
     plt.loglog(nlist, abs(chi_n - chi_ref[-1]) / abs(chi_ref[-1]))
     plt.xlabel("num samples")
     plt.ylabel("rel err")
     plt.title(f"METTS approximation error of response function at t = {tlist[-1]}")
-    plt.show()
+    plt.savefig(image_folderpath.joinpath("metts_ising_2.png"), dpi=300)
+    plt.clf()
 
 
 if __name__ == "__main__":

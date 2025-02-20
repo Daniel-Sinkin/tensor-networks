@@ -1,6 +1,7 @@
-"""https://github.com/cmendl/pytenet/blob/master/experiments/tangent_space.py"""
-
 """
+Modified from:
+https://github.com/cmendl/pytenet/blob/master/experiments/tangent_space.py
+
 Numerically investigate MPS tangent space dimension and projector.
 
 Reference:
@@ -10,6 +11,7 @@ Reference:
 """
 
 import copy
+from pathlib import Path
 
 import numpy as np
 import pytenet as ptn
@@ -65,7 +67,7 @@ def tangent_space_projector(psi: ptn.MPS):
     return P
 
 
-def main():
+def main(image_folderpath: Path = Path(".")):
     rng = np.random.default_rng()
 
     # physical dimension

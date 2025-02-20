@@ -1,6 +1,6 @@
-"""From the README of the pytenet repo"""
-
 """
+From the README of the pytenet repo
+
 Extended example to visualize the time evolution with a manual computation
 of the energy expectation value <psi|H|psi>.
 
@@ -8,6 +8,8 @@ This implementation assumes that the MPO object (returned by
 ptn.heisenberg_xxz_mpo) stores its site tensors in the attribute `A`
 with shape (d, d, D_left, D_right) at each site.
 """
+
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -51,7 +53,7 @@ def compute_energy(psi: ptn.MPS, mpo: ptn.MPO) -> float:
     return energy.real
 
 
-def main() -> None:
+def main(image_folderpath: Path = Path(".")) -> None:
     # Number of lattice sites (1D with open boundary conditions)
     L = 10
 
@@ -74,7 +76,7 @@ def main() -> None:
 
     # Define the time step (with both real and imaginary parts).
     dt = 0.01 - 0.05j
-    numsteps = 100
+    numsteps = 20
 
     # List to store energy expectation values.
     energies = []
@@ -95,7 +97,8 @@ def main() -> None:
     plt.ylabel("Energy Expectation Value")
     plt.title("Energy Evolution during TDVP Time Evolution")
     plt.grid(True)
-    plt.show()
+    plt.savefig(image_folderpath.joinpath("example.png"), dpi=300)
+    plt.clf()
 
 
 if __name__ == "__main__":

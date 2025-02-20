@@ -1,6 +1,7 @@
-"""https://github.com/cmendl/pytenet/blob/master/experiments/evolution.py"""
-
 """
+Modified from
+https://github.com/cmendl/pytenet/blob/master/experiments/evolution.py
+
 Perform real time evolution using the TDVP algorithm and
 numerically investigate rate of convergence (should be quadratic).
 
@@ -11,6 +12,7 @@ Reference:
 """
 
 import copy
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -36,7 +38,7 @@ def schmidt_coefficients(d: int, L: int, psi: np.ndarray):
     )
 
 
-def main():
+def main(image_folderpath: Path = Path(".")):
     # physical local Hilbert space dimension
     d = 2
 
@@ -75,8 +77,8 @@ def main():
     plt.xlabel("i")
     plt.ylabel(r"$\sigma_i$")
     plt.title("Schmidt coefficients of initial state")
-    plt.savefig("evolution_schmidt_0.pdf")
-    plt.show()
+    plt.savefig(image_folderpath.joinpath("evolution_schmidt_0.png"), dpi=300)
+    plt.clf()
     print(
         "entropy of initial state:", entropy((sigma_0 / np.linalg.norm(sigma_0)) ** 2)
     )
@@ -95,8 +97,8 @@ def main():
     plt.title(
         f"Schmidt coefficients of time-evolved state (t = {t.imag:g})\n(based on exact time evolution)"
     )
-    plt.savefig("evolution_schmidt_t.pdf")
-    plt.show()
+    plt.savefig(image_folderpath.joinpath("evolution_schmidt_t.png"), dpi=300)
+    plt.clf()
     print(
         "entropy of time-evolved state:",
         entropy((sigma_t / np.linalg.norm(sigma_t)) ** 2),
@@ -132,8 +134,8 @@ def main():
     plt.title(
         f"TDVP time evolution rate of convergence (t = {t.imag:g}) for\nHeisenberg XXZ model (J={J:g}, D={DH:g}, h={h:g})"
     )
-    plt.savefig("evolution_convergence.pdf")
-    plt.show()
+    plt.savefig(image_folderpath.joinpath("evolution_convergence.png"), dpi=300)
+    plt.clf()
 
 
 if __name__ == "__main__":
