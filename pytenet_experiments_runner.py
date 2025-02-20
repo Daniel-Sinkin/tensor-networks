@@ -31,16 +31,16 @@ class PrefixWriter:
     from the print statement of the main functions.
     """
 
-    def __init__(self, stream, indent="\t"):
+    def __init__(self, stream, prefix="\t"):
         self.stream = stream
-        self.indent = indent
+        self.prefix = prefix
         self.at_line_start = True
 
     def write(self, text):
         """Prefixes the string."""
         for line in text.splitlines(keepends=True):
             if self.at_line_start and line:
-                self.stream.write(self.indent)
+                self.stream.write(self.prefix)
             self.stream.write(line)
             self.at_line_start = line.endswith("\n")
 
